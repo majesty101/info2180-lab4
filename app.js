@@ -15,6 +15,7 @@ window.onload =function(){
                 var response = httprequest.responseText;
                 aaa = document.getElementsByClassName("msg").item(0);
                 aaa.innerHTML = response;
+                alert(aaa.innerHTML);
                 
             }else{
                 var msg ="problem";
