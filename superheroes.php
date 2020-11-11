@@ -63,14 +63,34 @@ $superheroes = [
   ], 
 ];
 
+
+echo filter_input(INPUT_GET, "search", FILTER_SANITIZE_STRING);
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
 
+
 ?>
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+<?php
+$help = $_REQUEST['search'];
+if (empty($help) == false){
+ foreach ($superheroes as $superhero){
+     if ($help == $superhero['alias'] || $help == $superhero['name']){
+         echo "<li>".$superhero['name']."</li>";
+         echo $help;
+        }else{
+            $var = " Superhero not found";
+            echo $var;
+    }
+}
+
+}else {
+    foreach($superheroes as $superhero){
+        echo "<li>".$superhero['alias']."</li>";
+    }
+}
+
+ ?>
+
