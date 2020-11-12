@@ -64,26 +64,26 @@ $superheroes = [
 ];
 
 
-echo filter_input(INPUT_GET, "search", FILTER_SANITIZE_STRING);
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
-header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
 
 
 ?>
 
 <?php
-$help = $_REQUEST['search'];
+$help = filter_var($_REQUEST['search'],FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+$count = 0;
 if (empty($help) == false){
  foreach ($superheroes as $superhero){
-     if ($help == $superhero['alias'] || $help == $superhero['name']){
-         echo "<li>".$superhero['name']."</li>";
-         echo $help;
-        }else{
-            $var = " Superhero not found";
-            echo $var;
+    if (strcasecmp($help,$superhero['alias']) == 0 || strcasecmp($help,$superhero['name']) == 0){
+        echo "<h3>".$superhero['alias']."</h3>";
+        echo "<h4>".$superhero['name']."</h4>";
+        echo "<p>".$superhero['biography']."</p>";
+        break;
+    }elseif($count == 9){
+        echo "Superhero not found";
     }
+    $count++;
 }
 
 }else {
