@@ -4,22 +4,18 @@ window.onload =function(){
     var httprequest = new XMLHttpRequest();
 
     loadbtn.addEventListener('click', function(e){
-        e.preventDefault(); 
+        e.preventDefault();
+        output = document.getElementsByClassName("msg").item(0);
+        aaa = document.getElementById("search").value;
 
         //get
         var url = "http://localhost:8080/superheroes.php?search=";
-        httprequest.open("GET", url, true);
+        httprequest.open("GET", url + aaa, true);
         httprequest.onreadystatechange = function() {
             if(httprequest.readyState == XMLHttpRequest.DONE && httprequest.status == 200){
            
                 var response = httprequest.responseText;
-                aaa = document.getElementsByClassName("msg").item(0);
-                aaa.innerHTML = response;
-          
-                
-            }else{
-                var ms ="problem";
-             ms.innerHTML = ms;
+                output.innerHTML = response;
             }
     };
     httprequest.send();
